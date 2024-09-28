@@ -1,0 +1,43 @@
+CREATE TABLE cliente_db (
+    cliente_id INT AUTO_INCREMENT PRIMARY KEY,
+    nome_client VARCHAR(110),
+    num_telefone VARCHAR(15),
+    email VARCHAR(245)
+);
+
+CREATE TABLE pedido_db (
+    num_pedido INT AUTO_INCREMENT PRIMARY KEY,
+    cliente_id INT,
+    num_pecas INT,
+    descricao VARCHAR(255),
+    data_atual DATE,
+    data_entrega DATE,
+    total DECIMAL(10, 2),
+    forma_pag VARCHAR(50),
+    FOREIGN KEY (cliente_id) REFERENCES cliente_db(cliente_id)
+);
+
+CREATE TABLE produto_db (
+    id_produto INT AUTO_INCREMENT PRIMARY KEY,
+    descricao VARCHAR(255),
+    tamanho DECIMAL(15,2),
+    cor VARCHAR(80)
+);
+
+CREATE TABLE estoque_db (
+    id_estoque INT AUTO_INCREMENT PRIMARY KEY,
+    id_produto INT,
+    qnt_produto INT,
+    qnt_vendida INT,
+    FOREIGN KEY (id_produto) REFERENCES produto_db(id_produto)
+);
+
+CREATE TABLE vendas_db (
+    id_vendas INT AUTO_INCREMENT PRIMARY KEY,
+    cliente_id INT,
+    num_pedido INT,
+    data_venda DATE,
+    total_venda DECIMAL(10, 2),
+    FOREIGN KEY (cliente_id) REFERENCES cliente_db(cliente_id),
+    FOREIGN KEY (num_pedido) REFERENCES pedido_db(num_pedido)
+);
